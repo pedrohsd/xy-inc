@@ -36,11 +36,15 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public void save( String name, Object model ) {
         MetaModel metaModel = metaModelService.findByName(name);
-
         validate(metaModel, model);
-
         modelRepository.save( name, model );
     }
+
+    @Override
+    public Object findById( String name, String id ) {
+        return modelRepository.findById(name, id, metaModelService.getEntityClass(name));
+    }
+
 
     @Override
     public List<?> findAll( String name ) {
@@ -55,7 +59,7 @@ public class ModelServiceImpl implements ModelService {
         attributes.forEach( ( k, v ) -> {
             final AtomicBoolean found = new AtomicBoolean( false );
             metaModel.getMetaAttributes().forEach( ma -> {
-                if ( ma.getName().equals( k ) ) {
+                if ( ma.getName().equals( k ) && !k.equals( "_id" )) {
                     found.set( true );
                     String errorMsg = "Invalid attribute type for %s. It must be of type %s and was %s";
 
@@ -79,7 +83,7 @@ public class ModelServiceImpl implements ModelService {
                     }
                 }
             } );
-            if ( !found.get() ) {
+            if ( !found.get() && !k.equals( "_id" )) {
                 throw new IllegalArgumentException( String.format( "Invalid model attribute: %s. Allowed attributes: %s",
                     k,
                     metaModel.getMetaAttributes().stream().map( m -> "(" + m.getName() + "," + m.getType() + ")" ).collect( Collectors.toList() ) ) );

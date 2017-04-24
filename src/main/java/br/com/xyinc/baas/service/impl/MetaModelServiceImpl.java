@@ -95,7 +95,7 @@ public class MetaModelServiceImpl implements MetaModelService {
             entities.put( metaModel.getName(), clazz );
             return clazz;
         } catch ( NotFoundException | CannotCompileException e ) {
-            throw new RuntimeException( "Could not create model", e );
+            throw new RuntimeException( "Could not save model", e );
         }
     }
 

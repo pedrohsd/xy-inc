@@ -58,7 +58,6 @@ public class MetaModelControllerTest extends AbstractRestIT {
     public void shouldCreateMetaModel_Successfully() throws Exception {
 
         MetaModel metaModel = createMetaModel("");
-        metaModelService.create( metaModel );
 
         restBusMockMvc.perform( post( "/api/metamodel" )
             .contentType( contentType )
@@ -70,7 +69,7 @@ public class MetaModelControllerTest extends AbstractRestIT {
             .andExpect( jsonPath( "$.id" ).exists() )
             .andExpect( jsonPath( "$.name" ).value( metaModel.getName() ) )
             .andExpect( jsonPath( "$.metaAttributes" ).exists() )
-            .andExpect( jsonPath( "$.metaAttributes", hasSize(4) ) );
+            .andExpect( jsonPath( "$.metaAttributes", hasSize(5) ) );
     }
 
     @Test
@@ -89,7 +88,7 @@ public class MetaModelControllerTest extends AbstractRestIT {
             .andExpect( jsonPath( "$.id" ).value( metaModel.getId() ) )
             .andExpect( jsonPath( "$.name" ).value( metaModel.getName() ) )
             .andExpect( jsonPath( "$.metaAttributes" ).exists() )
-            .andExpect( jsonPath( "$.metaAttributes", hasSize(4) ) );
+            .andExpect( jsonPath( "$.metaAttributes", hasSize(5) ) );
     }
 
     @Test

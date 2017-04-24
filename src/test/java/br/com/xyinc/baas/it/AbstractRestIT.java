@@ -17,7 +17,9 @@ import java.nio.charset.Charset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public abstract class AbstractRestIT extends AbstractBaseIT {
@@ -42,7 +44,7 @@ public abstract class AbstractRestIT extends AbstractBaseIT {
         List<MetaAttribute> metaAttributes = new ArrayList<>( );
         metaAttributes.add( new MetaAttribute( "name", AttributeType.STRING ) );
         metaAttributes.add( new MetaAttribute( "price", AttributeType.DECIMAL ) );
-        metaAttributes.add( new MetaAttribute( "buildAt", AttributeType.DATE ) );
+        metaAttributes.add( new MetaAttribute( "builtAt", AttributeType.DATE ) );
         metaAttributes.add( new MetaAttribute( "number", AttributeType.INTEGER ) );
 
         if(name == null || name.isEmpty()) {
@@ -51,6 +53,17 @@ public abstract class AbstractRestIT extends AbstractBaseIT {
         MetaModel metaModel = new MetaModel( null, name, metaAttributes );
 
         return metaModel;
+    }
+
+    public Map createModel() {
+
+        Map model = new LinkedHashMap(  );
+        model.put( "name", RandomStringUtils.randomAlphabetic( 5 ) );
+        model.put( "price", 4300.5324 );
+        model.put( "builtAt", "2011-04-08T09:00:00.000" );
+        model.put( "number", 3000 );
+
+        return model;
     }
 
 }

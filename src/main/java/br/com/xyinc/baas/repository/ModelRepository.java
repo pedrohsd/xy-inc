@@ -11,4 +11,7 @@ public interface ModelRepository {
     void delete( String name, Object model );
 
     <T> List<T> findAll( String name, Class<T> clazz );
+
+    <T> T findById( String name, String id, Class<T> clazz );
+
 }
