@@ -69,7 +69,7 @@ public class MetaModelControllerTest extends AbstractRestIT {
             .andExpect( jsonPath( "$.id" ).exists() )
             .andExpect( jsonPath( "$.name" ).value( metaModel.getName() ) )
             .andExpect( jsonPath( "$.metaAttributes" ).exists() )
-            .andExpect( jsonPath( "$.metaAttributes", hasSize(5) ) );
+            .andExpect( jsonPath( "$.metaAttributes", hasSize(4) ) );
     }
 
     @Test
@@ -88,7 +88,7 @@ public class MetaModelControllerTest extends AbstractRestIT {
             .andExpect( jsonPath( "$.id" ).value( metaModel.getId() ) )
             .andExpect( jsonPath( "$.name" ).value( metaModel.getName() ) )
             .andExpect( jsonPath( "$.metaAttributes" ).exists() )
-            .andExpect( jsonPath( "$.metaAttributes", hasSize(5) ) );
+            .andExpect( jsonPath( "$.metaAttributes", hasSize(4) ) );
     }
 
     @Test
