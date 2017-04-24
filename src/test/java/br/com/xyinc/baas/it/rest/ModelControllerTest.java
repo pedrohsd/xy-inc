@@ -18,15 +18,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 public class ModelControllerTest extends AbstractRestIT {
@@ -133,6 +128,61 @@ public class ModelControllerTest extends AbstractRestIT {
             .accept( APPLICATION_JSON_UTF8_VALUE ) )
             .andDo( print() )
             .andExpect( status().isOk() );
+    }
+
+    @Test
+    public void shouldFindAllModels_Successfully()
+        throws Exception {
+
+        MetaModel metaModel = createMetaModel("");
+        metaModelService.create( metaModel );
+
+        for(int i = 0; i < 5; i++) {
+            Map model = createModel();
+            modelService.save( metaModel.getName(), model );
+        }
+
+        restBusMockMvc.perform( get( "/api/model/" + metaModel.getName() )
+            .accept( APPLICATION_JSON_UTF8_VALUE ) )
+            .andDo( print() )
+            .andExpect( status().isOk() )
+            .andExpect( content().contentType( APPLICATION_JSON_UTF8_VALUE ) )
+            .andExpect( jsonPath( "$.length()" ).value( 5));
+
+    }
+
+    @Test
+    public void shouldFindModelById_Successfully()
+        throws Exception {
+
+        MetaModel metaModel = createMetaModel("");
+        metaModelService.create( metaModel );
+
+        Map model = createModel();
+
+        MvcResult result = restBusMockMvc.perform( post( "/api/model/" + metaModel.getName() )
+            .contentType( contentType )
+            .content( this.convertObjectToJsonBytes( model ) )
+            .accept( APPLICATION_JSON_UTF8_VALUE ) )
+            .andDo( print() )
+            .andExpect( status().isOk() )
+            .andExpect( content().contentType( APPLICATION_JSON_UTF8_VALUE ) )
+            .andReturn();
+
+        Map<String,Object> json =
+            new ObjectMapper().readValue(result.getResponse().getContentAsString(), HashMap.class);
+
+        restBusMockMvc.perform( get( "/api/model/" + metaModel.getName() + "/" + json.get("_id") )
+            .contentType( contentType )
+            .content( this.convertObjectToJsonBytes( model ) )
+            .accept( APPLICATION_JSON_UTF8_VALUE ) )
+            .andDo( print() )
+            .andExpect( status().isOk() )
+            .andExpect( content().contentType( APPLICATION_JSON_UTF8_VALUE ) )
+            .andExpect( jsonPath( "$.name" ).value( model.get( "name" ) ))
+            .andExpect( jsonPath( "$.price" ).value( model.get( "price" ) ))
+            .andExpect( jsonPath( "$.builtAt" ).value( model.get( "builtAt" ) ))
+            .andExpect( jsonPath( "$.number" ).value( model.get( "number" ) ));
     }
 
 }
