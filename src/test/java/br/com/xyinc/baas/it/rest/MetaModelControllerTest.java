@@ -8,7 +8,6 @@ import br.com.xyinc.baas.service.MetaModelService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Meta;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -16,14 +15,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.core.Is.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 public class MetaModelControllerTest extends AbstractRestIT {
@@ -106,6 +103,28 @@ public class MetaModelControllerTest extends AbstractRestIT {
             .content( this.convertObjectToJsonBytes( metaModel ) )
             .accept( MediaType.APPLICATION_JSON_UTF8_VALUE ) )
             .andExpect( status().isConflict() )
+            .andDo( print() );
+    }
+
+    @Test
+    public void shouldDeleteMetaModel_Successfully() throws Exception {
+
+        MetaModel metaModel = createMetaModel("");
+        metaModelService.create( metaModel );
+
+        restBusMockMvc.perform( delete( "/api/metamodel/" + metaModel.getId() )
+            .contentType( contentType )
+            .content( this.convertObjectToJsonBytes( metaModel ) )
+            .accept( MediaType.APPLICATION_JSON_UTF8_VALUE ) )
+            .andExpect( status().isOk() )
+            .andExpect( content().contentType( MediaType.APPLICATION_JSON_UTF8_VALUE ) )
+            .andDo( print() );
+
+        restBusMockMvc.perform( get( "/api/metamodel/" + metaModel.getId() )
+            .contentType( contentType )
+            .content( this.convertObjectToJsonBytes( metaModel ) )
+            .accept( MediaType.APPLICATION_JSON_UTF8_VALUE ) )
+            .andExpect( status().isNotFound() )
             .andDo( print() );
     }
 

@@ -52,6 +52,7 @@ public class MetaModelServiceImpl implements MetaModelService {
     public MetaModel delete( String id ) {
         MetaModel metaModel = findById( id );
         metaModelRepository.delete( metaModel );
+        repositoryHelper.dropCollection( metaModel.getName() );
         return metaModel;
     }
 
