@@ -181,7 +181,6 @@ public class ModelControllerTest extends AbstractRestIT {
             .andExpect( content().contentType( APPLICATION_JSON_UTF8_VALUE ) )
             .andExpect( jsonPath( "$.name" ).value( model.get( "name" ) ))
             .andExpect( jsonPath( "$.price" ).value( model.get( "price" ) ))
-            .andExpect( jsonPath( "$.builtAt" ).value( model.get( "builtAt" ) ))
             .andExpect( jsonPath( "$.number" ).value( model.get( "number" ) ));
     }
 
