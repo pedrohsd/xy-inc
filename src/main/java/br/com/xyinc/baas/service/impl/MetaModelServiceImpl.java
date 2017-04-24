@@ -76,7 +76,7 @@ public class MetaModelServiceImpl implements MetaModelService {
 
 
     @Override
-    public Class getEntity( String modelName ) {
+    public Class getEntityClass( String modelName ) {
         Class entity = entities.get( modelName );
         if(entity == null) {
             MetaModel metaModel = findByName( modelName );

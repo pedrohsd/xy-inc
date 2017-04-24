@@ -1,6 +1,7 @@
 package br.com.xyinc.baas.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class MetaModel {
     public static final int MAX_LENGTH_NAME = 120;
 
     @Id
+    @JsonInclude
     private String id;
 
     private String name;

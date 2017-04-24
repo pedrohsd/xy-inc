@@ -44,7 +44,7 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public List<?> findAll( String name ) {
-        return modelRepository.findAll( name, metaModelService.getEntity(name) );
+        return modelRepository.findAll( name, metaModelService.getEntityClass(name) );
     }
 
 

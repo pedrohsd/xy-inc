@@ -18,6 +18,6 @@ public interface MetaModelService {
 
     MetaModel findByName( String name );
 
-    Class getEntity(String modelName);
+    Class getEntityClass(String modelName);
 
 }
