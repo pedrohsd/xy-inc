@@ -32,6 +32,12 @@ public class ModelController {
         return ResponseEntity.ok(model);
     }
 
+    @RequestMapping(value = "{name}/{id}", method = RequestMethod.DELETE)
+    private ResponseEntity delete(@PathVariable("name") String name, @PathVariable("id") String id) {
+        modelService.delete( name, id );
+        return ResponseEntity.ok().build();
+    }
+
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
     private ResponseEntity<List<?>> findAll(@PathVariable("name") String name) {
         List result = modelService.findAll( name );

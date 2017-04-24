@@ -8,7 +8,7 @@ public interface ModelRepository {
 
     void save( String name, Object model );
 
-    void delete( String name, Object model );
+    void delete( String name, String id, Object model );
 
     <T> List<T> findAll( String name, Class<T> clazz );
 

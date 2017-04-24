@@ -40,6 +40,14 @@ public class ModelServiceImpl implements ModelService {
         modelRepository.save( name, model );
     }
 
+
+    @Override
+    public void delete( String name, String id ) {
+        Object model = findById( name, id );
+        modelRepository.delete( name, id, model );
+    }
+
+
     @Override
     public Object findById( String name, String id ) {
         return modelRepository.findById(name, id, metaModelService.getEntityClass(name));

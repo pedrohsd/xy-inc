@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 
 
 @Repository
@@ -23,13 +24,13 @@ public class ModelRepositoryImpl implements ModelRepository {
     @Override
     public void save( String name, Object model ) {
         if(!((LinkedHashMap) model).containsKey( "_id" )) {
-            ( (LinkedHashMap) model ).put( "_id", RandomStringUtils.randomAlphanumeric( ID_LENGTH ) );
+            ( (LinkedHashMap) model ).put( "_id", UUID.randomUUID().toString() );
         }
         mongoTemplate.save( model, name );
     }
 
     @Override
-    public void delete( String name, Object model ) {
+    public void delete( String name, String id, Object model ) {
         mongoTemplate.remove( model, name );
     }
 

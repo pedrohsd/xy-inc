@@ -33,26 +33,19 @@ criar nova estrutura de modelo:
 	
 	payload (json):
 	{
-        "name": "Imóvel",
+        "name": "Pessoa",
         "metaAttributes": [
           {
             "name": "name",
             "type": "STRING"
           },
           {
-            "name": "number",
+            "name": "age",
             "type": "INTEGER"
-          },
-          {
-            "name": "builtAt",
-            "type": "DATE"
-          },
-          {
-            "name": "price",
-            "type": "DECIMAL"
           }
         ]
     }
+
 
 deletar estrutura de modelo:
 	
@@ -65,25 +58,25 @@ Abaixo estão alguns exemplos de como interagir com a API, usando o model Imóve
 
 listar todos os imóveis:
 
-    GET http://localhost:8080/baas/api/model/Imóvel
+    GET http://localhost:8080/baas/api/model/Pessoa
     
-criar novo imovel:
+criar nova pessoa:
 
-    POST http://localhost:8080/baas/api/model/Imóvel
+    POST http://localhost:8080/baas/api/model/Pessoa
     {
-      "name": "Casa do Fulano",
-      "number": 3000,
-      "builtAt": "2011-04-08T09:00:00.000",
-      "price": 4300.5324
+        "name": "Pedro Henrique",
+        "age": 25
     }
     
-atualizar imóvel:
+atualizar pessoa:
 
-    PUT http://localhost:8080/baas/api/model/Imóvel/58fd54e6906308195f297242
+    PUT http://localhost:8080/baas/api/model/Pessoa/d03a67ba-99d7-4969-b3fb-b0641f13eb1f
         {
-          "id": "58fd54e6906308195f297242",
-          "name": "Casa do Beltrano,
-          "number": 3001,
-          "builtAt": "2011-04-08T09:00:00.000",
-          "price": 4300.5324
+            "name": "Pedro Henrique Silvestre Duarte",
+            "age": 25,
+            "_id": "d03a67ba-99d7-4969-b3fb-b0641f13eb1f"
         }
+        
+deletar pessoa:
+        
+        DELETE http://localhost:8080/baas/api/model/Pessoa/d03a67ba-99d7-4969-b3fb-b0641f13eb1f

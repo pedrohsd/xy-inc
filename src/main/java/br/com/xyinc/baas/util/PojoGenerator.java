@@ -30,6 +30,8 @@ public class PojoGenerator {
             cc.addMethod(generateSetter(cc, entry.getKey(), entry.getValue()));
         }
 
+        cc.addField(new CtField(resolveCtClass(String.class), "_id", cc));
+
         return cc.toClass();
     }
 

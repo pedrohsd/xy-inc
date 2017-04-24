@@ -12,4 +12,5 @@ public interface ModelService {
 
     <T> T findById( String name, String id );
 
+    void delete( String name, String id );
 }
