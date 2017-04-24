@@ -1,4 +1,4 @@
-# xy-inc
+# xy-inc - Backend as a Service
 
 Aplicações necessárias para construir e executar a aplicação:
 
@@ -23,7 +23,7 @@ A aplicação estará disponível na porta 8080.
 Para criar um modelo, primeiramente é necessário criar a estrutura do mesmo.
 Abaixo estão alguns exemplos de como usar a API:
 
-listar todos as estruturas de modelos cadastrados:
+listar todas as estruturas de modelos cadastrados:
 	
 	GET http://localhost:8080/baas/api/metamodel
 
@@ -52,11 +52,14 @@ deletar estrutura de modelo:
 	DELETE localhost:8080/baas/api/metamodel/{id}
 	http://localhost:8080/baas/api/metamodel/58fcf2449063084b9ee0caf9
 
+Tipos de dados:
+    
+    INTEGER, DECIMAL, STRING, DATE (formato: yyyy-MM-dd'T'HH:mm:ss.SSS)
 
 Após criada a estrutura, pode-se manipular os modelos livremente.
-Abaixo estão alguns exemplos de como interagir com a API, usando o model Imóvel:
+Abaixo estão alguns exemplos de como interagir com a API, usando o model Pessoa:
 
-listar todos os imóveis:
+listar todas as pessoas:
 
     GET http://localhost:8080/baas/api/model/Pessoa
     
